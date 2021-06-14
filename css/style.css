@@ -5,4 +5,20 @@ html {
 body {
     font-family: 'VT323', monospace;
     box-sizing: border-box;
+    max-height: 100vh;
+    background-image: url('../img/milky-way-1920.jpg');
+    background-position: center;
+
+}
+
+.space-ship {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.space-ship img {
+    width: 70px;
+    height: 100px;
 }
