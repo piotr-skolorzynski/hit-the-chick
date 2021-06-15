@@ -1,4 +1,4 @@
-const spaceShip = document.querySelector('.space-ship');
+const spaceShip = document.querySelector('.spaceship');
 
 console.log(spaceShip);
 
