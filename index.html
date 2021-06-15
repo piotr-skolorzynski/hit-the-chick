@@ -9,13 +9,25 @@
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/style.css">
     <title>Hit the chick</title>
-    <script src="./js/main.js" defer></script>
+    <script type="module" src="./js/main.js" defer></script>
 </head>
 <body>
-
-    <div class="space-ship">
-        <img src="./img/space-ship2.png" alt="spaceship">
-    </div>
-    
+    <div class="container">
+        <div class="spaceship">
+            <img src="./img/space-ship2.png" alt="spaceship">
+        </div>
+        <section class="information">
+            <div class="information__content">Score: 0</div>
+            <div class="information__content">Lives: 3</div>
+        </section>
+        <div class="popup">
+            <div class="popup__content">
+                <p class="popup__text">
+                    You have lost! Try again!
+                </p>
+                <button class="popup__btn">New Game</button>
+            </div>
+        </div>
+    </div>  
 </body>
 </html>
