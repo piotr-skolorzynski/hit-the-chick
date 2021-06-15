@@ -1,5 +1,7 @@
 html {
     font-size: 62.5%;
+    --primary-color: rgb(162, 51, 206);
+    box-sizing: inherit;
 }
 
 body {
@@ -15,6 +17,7 @@ body {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: 0;
 }
 
 .shadow {
@@ -24,13 +27,67 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, .75);
+    z-index: -1;
+}
+
+.information {
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.information__content {
+    font-size: 3rem;
+}
+
+.popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    z-index: 10;
+}
+
+.popup__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    color: #fff;
+}
+
+.popup__text {
+    font-size: 4rem;
+    text-align: center;
+}
+
+.popup__btn {
+    padding: 2rem 1rem;
+    font-size: 3rem;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    background-color: transparent;
+    cursor: pointer;
+    transition: box-shadow .3s;
+}
+
+.popup__btn:hover {
+    box-shadow: 0 0 25px 5px var(--primary-color);
+}
+
+.hide {
+    display: none;
 }
 
 .spaceship {
     position: absolute;
-    bottom: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 64px;
     height: 64px;
     background-image: url('../img/spaceship.png');
