@@ -103,3 +103,12 @@ body {
         background-position-x: 512px;
     }
 }
+
+.projectile {
+    position: absolute;
+    width: 12px;
+    height: 24px;
+    background-image: url('../img/projectile.png');
+    background-size: cover;
+    background-position: center;
+}

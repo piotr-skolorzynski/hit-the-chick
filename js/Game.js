@@ -5,10 +5,13 @@ import { Spaceship } from './Spaceship.js';
 class Game {
     //kolekcja pobieranych elementów
     htmlElements = {
-        spaceship: document.querySelector('[data-spaceship]')
+        //uchwycenie statku kosmicznego
+        spaceship: document.querySelector('[data-spaceship]'),
+        //uchwycenie div-a container, w którm mieści się cała gra
+        container: document.querySelector('[data-container]')
     }
-    //statek kosmiczny na bazie klasy Spaceship, argument div reprezentujący statek kosmiczny
-    ship = new Spaceship(this.htmlElements.spaceship);
+    //statek kosmiczny na bazie klasy Spaceship, argument div reprezentujący statek kosmiczny oraz cały container potrzebny do monitorowania przemieszczających się przeciwników
+    ship = new Spaceship(this.htmlElements.spaceship, this.htmlElements.container);
     //metoda inicjalizująca życie gry
     init = () => {
         //uruchamia metodę klasy spaceship

@@ -1,3 +1,5 @@
+import { Projectile } from "./Projectile.js";
+
 class Spaceship {
     moveValue = 5; //wartość jednostkowego przesunięcia
     //status załączenia przycisku
@@ -5,9 +7,12 @@ class Spaceship {
     rightArrow = false;
     upArrow = false;
     downArrow = false;
+    //tablica przechowująca wystrzelone pociski
+    projectiles = [];
 
-    constructor(element) {
+    constructor(element, container) {
         this.element = element;
+        this.container = container;
     }
     //umożliwia uruchomienie właściwości obiektu
     init = () => {
@@ -75,13 +80,13 @@ class Spaceship {
     }
     //kieruj statkiem
     controlShipMove = () => {
-        if (this.leftArrow && this.getXposition() > 3) {
+        if (this.leftArrow && this.getXposition() > 5) {
             this.element.style.left = `${this.getXposition() - this.moveValue}px`;
         }
-        if (this.rightArrow && this.getXposition() < window.innerWidth - this.element.offsetWidth - 3) {
+        if (this.rightArrow && this.getXposition() < window.innerWidth - this.element.offsetWidth - 5) {
             this.element.style.left = `${this.getXposition() + this.moveValue}px`;
         }
-        if (this.upArrow && this.getYposition() < window.innerHeight / 2 - this.element.offsetHeight - 3) {
+        if (this.upArrow && this.getYposition() < window.innerHeight - this.element.offsetHeight - 5) {
             this.element.style.bottom = `${this.getYposition() + this.moveValue}px`;
         }
         if (this.downArrow && this.getYposition() > 0) {
@@ -98,7 +103,12 @@ class Spaceship {
     }
     //realizuj strzelanie
     handleShipFire = () => {
-        console.log('ship fired projectile');
+        //utwórz pocisk 
+        const projectile = new Projectile(this.getXposition() + this.element.offsetWidth / 2, this.element.offsetTop, this.container);
+        //animuj pocisk
+        projectile.init(); 
+        //zapisz pocisk w tabeli
+        this.projectiles.push(projectile);
     }
 }
 
