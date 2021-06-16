@@ -9,7 +9,7 @@ class Spaceship {
     constructor(element) {
         this.element = element;
     }
-    //umożliwia uruchomienie obiektu
+    //umożliwia uruchomienie właściwości obiektu
     init = () => {
         this.setPosition();
         this.keyPressListener();
@@ -40,6 +40,10 @@ class Spaceship {
                 case "Down":
                 case "ArrowDown":
                     this.downArrow = true;
+                    break;
+                case " ":
+                    this.handleShipFire();
+                    break;
             }
         });
         //nasłuchuj na podniesiony przycisk
@@ -60,6 +64,7 @@ class Spaceship {
                 case "Down":
                 case "ArrowDown":
                     this.downArrow = false;
+                    break;
             }
         });
     }
@@ -90,6 +95,10 @@ class Spaceship {
     //pobierz akualną pozycję statku na osi y
     getYposition = () => {
         return parseInt(this.element.style.bottom, 10);
+    }
+    //realizuj strzelanie
+    handleShipFire = () => {
+        console.log('ship fired projectile');
     }
 }
 
