@@ -10,7 +10,7 @@ class Game {
     //statek kosmiczny na bazie klasy Spaceship, argument div reprezentujący statek kosmiczny
     ship = new Spaceship(this.htmlElements.spaceship);
     //metoda inicjalizująca życie gry
-    init() {
+    init = () => {
         //uruchamia metodę klasy spaceship
         this.ship.init();
     }
