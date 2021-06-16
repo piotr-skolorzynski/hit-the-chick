@@ -3,6 +3,8 @@ class Spaceship {
     //status załączenia przycisku
     leftArrow = false;
     rightArrow = false;
+    upArrow = false;
+    downArrow = false;
 
     constructor(element) {
         this.element = element;
@@ -31,6 +33,13 @@ class Spaceship {
                 case "ArrowRight":
                     this.rightArrow = true;
                     break;
+                case "Up":
+                case "ArrowUp":
+                    this.upArrow = true;
+                    break;
+                case "Down":
+                case "ArrowDown":
+                    this.downArrow = true;
             }
         });
         //nasłuchuj na podniesiony przycisk
@@ -44,6 +53,13 @@ class Spaceship {
                 case "ArrowRight":
                     this.rightArrow = false;
                     break;
+                case "Up":
+                case "ArrowUp":
+                    this.upArrow = false;
+                    break;
+                case "Down":
+                case "ArrowDown":
+                    this.downArrow = false;
             }
         });
     }
@@ -60,10 +76,20 @@ class Spaceship {
         if (this.rightArrow && this.getXposition() < window.innerWidth - this.element.offsetWidth - 3) {
             this.element.style.left = `${this.getXposition() + this.moveValue}px`;
         }
+        if (this.upArrow && this.getYposition() < window.innerHeight / 2 - this.element.offsetHeight - 3) {
+            this.element.style.bottom = `${this.getYposition() + this.moveValue}px`;
+        }
+        if (this.downArrow && this.getYposition() > 0) {
+            this.element.style.bottom = `${this.getYposition() - this.moveValue}px`;
+        }
     }
     //pobierz aktualną pozycję statku na osi x
     getXposition = () => {
         return parseInt(this.element.style.left, 10);
+    }
+    //pobierz akualną pozycję statku na osi y
+    getYposition = () => {
+        return parseInt(this.element.style.bottom, 10);
     }
 }
 
