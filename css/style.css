@@ -121,7 +121,8 @@ body {
     width: 70%;
     height: 50vh;
     display: flex;
-    justify-self: center;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
 }
 
@@ -133,3 +134,51 @@ body {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.explosion {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    width: 64px;
+    height: 64px;
+    background-image: url('../img/explosion.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: showExplosion 800ms steps(17) infinite;
+}
+
+@keyframes showExplosion {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        background-position-x: 1088px;
+    }
+}
+
+.explosion--big {
+    position: absolute;
+    bottom: 20%;
+    left: 80%;
+    width: 128px;
+    height: 128px;
+    background-image: url('../img/explosion-big.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: showBigExplosion 1000ms steps(17) infinite;
+}
+
+@keyframes showBigExplosion {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        background-position-x: 2176px;
+    }
+}
+
+
