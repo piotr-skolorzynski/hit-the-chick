@@ -112,3 +112,24 @@ body {
     background-size: cover;
     background-position: center;
 }
+
+.enemy__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 50vh;
+    display: flex;
+    justify-self: center;
+    align-items: center;
+}
+
+.invader {
+    width: 76px;
+    height: 76px;
+    background-image: url('../img/red-chicken.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
