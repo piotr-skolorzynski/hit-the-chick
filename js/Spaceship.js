@@ -46,9 +46,6 @@ class Spaceship {
                 case "ArrowDown":
                     this.downArrow = true;
                     break;
-                case " ":
-                    this.handleShipFire();
-                    break;
             }
         });
         //nasłuchuj na podniesiony przycisk
@@ -70,6 +67,9 @@ class Spaceship {
                 case "ArrowDown":
                     this.downArrow = false;
                     break;
+                case " ":
+                    this.handleShipFire();
+                    break;    
             }
         });
     }
@@ -104,7 +104,7 @@ class Spaceship {
     //realizuj strzelanie
     handleShipFire = () => {
         //utwórz pocisk 
-        const projectile = new Projectile(this.getXposition() + this.element.offsetWidth / 2, this.element.offsetTop, this.container);
+        const projectile = new Projectile(this.getXposition() + this.element.offsetWidth / 2, this.element.offsetTop + this.element.offsetHeight / 2, this.container);
         //animuj pocisk
         projectile.init(); 
         //zapisz pocisk w tabeli

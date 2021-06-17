@@ -3,8 +3,9 @@ class Projectile {
         //współrzędne pocisku
         this.x = x;
         this.y = y;
-        this.container = container;
-        this.element = document.createElement('div')
+        this.container = container; //rodzic czyli główna plansza gry
+        this.element = document.createElement('div'); //pudełko na wizualną reprezentację pocisku
+        this.interval = null; //umożliwienie kontroli nad interwałowym przemieszczaniem pocisku
     }
     //inicjacja pocisku
     init() {
@@ -14,11 +15,16 @@ class Projectile {
         this.container.appendChild(this.element);
         //nadaj mu współrzędne
         //po osi x
-        this.element.style.left = `${this.x}px`;
+        this.element.style.left = `${this.x - this.element.offsetWidth / 2}px`;
         //po osi y
-        this.element.style.top = `${this.y}px`;
+        this.element.style.top = `${this.y - this.element.offsetTop / 2}px`;
         //zmieniaj wartość odległości pocisku od górnej krawędzi o 1px co 5 msec
-        setInterval(() => this.element.style.top = `${this.element.offsetTop - 1}px`,5);
+        this.interval = setInterval(() => this.element.style.top = `${this.element.offsetTop - 1}px`,5);
+    }
+    //metoda usuwająca pocisk z planszy i czyszcząca jego interwał
+    removeProjectile = () => {
+        clearInterval(this.interval);
+        this.element.remove();
     }
 }
 
