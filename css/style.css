@@ -13,21 +13,11 @@ body {
     position: relative;
     width: 100vw;
     height: 100vh;
-    background-image: url('../img/milky-way-1920.jpg');
+    background-image: url('../img/background.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     z-index: 0;
-}
-
-.shadow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, .75);
-    z-index: -1;
 }
 
 .information {
@@ -119,7 +109,6 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 70%;
-    height: 50vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -145,7 +134,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    animation: showExplosion 800ms steps(17) infinite;
+    animation: showExplosion 1000ms steps(17) forwards;
 }
 
 @keyframes showExplosion {
@@ -168,7 +157,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    animation: showBigExplosion 1000ms steps(17) infinite;
+    animation: showBigExplosion 500ms steps(17) forwards;
 }
 
 @keyframes showBigExplosion {
