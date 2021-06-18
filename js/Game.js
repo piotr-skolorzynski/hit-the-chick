@@ -1,5 +1,6 @@
 //klasa Spaceship wyrażająca nasz statek kosmiczny
 import { Spaceship } from './Spaceship.js';
+import { Enemy } from './Enemy.js';
 
 // klasa game ma tworzyć obiekt, który będzie zarządzał całą rozgrywką
 class Game {
@@ -8,17 +9,26 @@ class Game {
         //uchwycenie statku kosmicznego
         spaceship: document.querySelector('[data-spaceship]'),
         //uchwycenie div-a container, w którm mieści się cała gra
-        container: document.querySelector('[data-container]')
+        container: document.querySelector('[data-container]'),
+        //uchwycenie rodzica na przeciwników
+        allenemies: document.querySelector('[data-enemies]')
     }
     //statek kosmiczny na bazie klasy Spaceship, argument div reprezentujący statek kosmiczny oraz cały container potrzebny do monitorowania przemieszczających się przeciwników
     ship = new Spaceship(this.htmlElements.spaceship, this.htmlElements.container);
     //kontroler interwału dla metody clearUselessProjectiles
     controlGameParametersInterval = null; 
+
+    //próbne wstawienie przeciwnika do kontenera
+    enemy = new Enemy(this.htmlElements.allenemies, 1);
+
     //metoda inicjalizująca życie gry
     init = () => {
         //uruchamia metodę klasy spaceship
         this.ship.init();
         this.controlGameParameters();
+        
+        //zainicjowanie próbnego wstawienia przeciwnika
+        this.enemy.init();
     }
     //interwał sprawdzający cyklicznie parametry gry, na tąchwilę tylko czyści zbędne pociski
     controlGameParameters = () => {
