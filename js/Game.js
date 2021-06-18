@@ -18,17 +18,21 @@ class Game {
     //kontroler interwału dla metody clearUselessProjectiles
     controlGameParametersInterval = null; 
 
-    //próbne wstawienie przeciwnika do kontenera
-    enemy = new Enemy(this.htmlElements.allenemies, 1);
+    //liczba wrogów do wygenerowania
+    enemyCounter = 22;
+    //tablica gromadząca wszystkich przeciwników
+    enemies = [];
+    //zmienna reprezentująca pojedynczego przeciwnika
+    enemy = null;
 
     //metoda inicjalizująca życie gry
     init = () => {
         //uruchamia metodę klasy spaceship
         this.ship.init();
+        //uruchom metodę monitorującą parametry
         this.controlGameParameters();
-        
-        //zainicjowanie próbnego wstawienia przeciwnika
-        this.enemy.init();
+        //utwórz przeciwników
+        this.createEnemies();
     }
     //interwał sprawdzający cyklicznie parametry gry, na tąchwilę tylko czyści zbędne pociski
     controlGameParameters = () => {
@@ -49,6 +53,17 @@ class Game {
             }
         });
     }
+    //metoda tworząca przeciwników na rozpoczęcie gry
+    createEnemies = () => {
+        for (let i = 0; i < this.enemyCounter; i+=1) {
+            let enemyId = 1;
+            this.enemy = new Enemy(this.htmlElements.allenemies, enemyId);
+            this.enemy.init();
+            this.enemies.push(this.enemy);
+        }
+    }
+
+    //stwórz generator id
 }
 
 //uruchom grę po załadowaniu drzewa DOM
