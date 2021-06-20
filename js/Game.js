@@ -1,5 +1,6 @@
 //klasa Spaceship wyrażająca nasz statek kosmiczny
 import { Spaceship } from './Spaceship.js';
+//klasa Enemy wyrażająca przeciwnika
 import { Enemy } from './Enemy.js';
 
 // klasa game ma tworzyć obiekt, który będzie zarządzał całą rozgrywką
@@ -17,14 +18,10 @@ class Game {
     ship = new Spaceship(this.htmlElements.spaceship, this.htmlElements.container);
     //kontroler interwału dla metody clearUselessProjectiles
     controlGameParametersInterval = null; 
-
     //liczba wrogów do wygenerowania
-    enemyCounter = 22;
+    enemyCounter = 25;
     //tablica gromadząca wszystkich przeciwników
     enemies = [];
-    //zmienna reprezentująca pojedynczego przeciwnika
-    enemy = null;
-
     //metoda inicjalizująca życie gry
     init = () => {
         //uruchamia metodę klasy spaceship
@@ -36,10 +33,10 @@ class Game {
     }
     //interwał sprawdzający cyklicznie parametry gry, na tąchwilę tylko czyści zbędne pociski
     controlGameParameters = () => {
-        this.controlGameParametersInterval = setInterval(() => this.clearUselessProjectiles(), 1); //Pamiętaj o zrobieniu czyszczenia interwału na zakończenie gry
+        this.controlGameParametersInterval = setInterval(() => this.checkPosition(), 1); //Pamiętaj o zrobieniu czyszczenia interwału na zakończenie gry
     }
     //metoda kontrolująca położenie każdego wystrzelonego pocisku i jego usunięcie z tablicy jeśli przekroczy górną krawędź planszy
-    clearUselessProjectiles = () => {
+    checkPosition = () => {
         //odwołanie do tablicy przechowującej pociski
         this.ship.projectiles.forEach((projectile, projectileIndex, projectileArray) => {   
             const projectilePosition = {
@@ -56,14 +53,17 @@ class Game {
     //metoda tworząca przeciwników na rozpoczęcie gry
     createEnemies = () => {
         for (let i = 0; i < this.enemyCounter; i+=1) {
-            let enemyId = 1;
-            this.enemy = new Enemy(this.htmlElements.allenemies, enemyId);
-            this.enemy.init();
+            let enemyId = this.genrateID(0, 1000000)
+            const enemy = new Enemy(this.htmlElements.allenemies, enemyId);
+            enemy.init();
             this.enemies.push(this.enemy);
         }
     }
 
-    //stwórz generator id
+    //generator id
+    genrateID(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
 }
 
 //uruchom grę po załadowaniu drzewa DOM
