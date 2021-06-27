@@ -30,6 +30,7 @@ class Game {
         this.controlGameParameters();
         //utwórz przeciwników
         this.createEnemies();
+        // console.log(this.enemies)
     }
     //interwał sprawdzający cyklicznie parametry gry, na tąchwilę tylko czyści zbędne pociski
     controlGameParameters = () => {
@@ -40,14 +41,50 @@ class Game {
         //odwołanie do tablicy przechowującej pociski
         this.ship.projectiles.forEach((projectile, projectileIndex, projectileArray) => {   
             const projectilePosition = {
-                //odległość dolnej krawędzi pocisku od górnej krawędzi planszy 
-                bottom: projectile.element.offsetTop
+                //odległość od górnej krawędzi pocisku
+                top: projectile.element.offsetTop,
+                //odległość do lewej krawędzi pocisku
+                left: projectile.element.offsetLeft,
+                //odległość od prawej krawędzi pocisku
+                right: (projectile.element.offsetLeft + projectile.element.offsetWidth),
+                //odległość dolnej krawędzi pocisku od górnej krawędzi planszy
+                bottom: (projectile.element.offsetTop + projectile.element.offsetHeight)
             }
+            // console.log(projectilePosition);
+
             //jeśli dolna krawędź pocisku przekroczyła górną krawędź planszy usuń pocisk, wyczyść jego interwał
             if (projectilePosition.bottom < 0) {
                 projectile.removeProjectile();
                 projectileArray.splice(projectileIndex, 1);
             }
+
+            //sprawdź dla każdego przeciwnika czy jego położenie zgadza się z położeniem pocisku
+            this.enemies.forEach((enemy, enemyIndex, enemyArr) => {
+
+            //odległości kontenera na wrogów od krawędzi przeglądarki niezbędne do porównań położenia przeciwnika i pocisku
+
+            const allenemiesContainerPosition = {
+                top: this.htmlElements.allenemies.offsetTop,
+                left: this.htmlElements.allenemies.offsetLeft,
+            }
+            
+            // console.log(allenemiesContainerPosition)
+
+            // położenie każdego z przeciwników
+                const enemyPosition = {
+                    top: enemy.element.offsetTop + allenemiesContainerPosition.top,
+                    left: enemy.element.offsetLeft + allenemiesContainerPosition.left,
+                    right: enemy.element.offsetLeft + enemy.element.offsetWidth + allenemiesContainerPosition.left,
+                    bottom: enemy.element.offsetHeight + enemy.element.offsetTop + allenemiesContainerPosition.top
+                }
+                // console.log(enemyPosition);
+                if (projectilePosition.top <= enemyPosition.bottom && projectilePosition.left >= enemyPosition.left && projectilePosition.right <= enemyPosition.right) {
+                    console.log(`bang! trafiłeś przeciwnika o id ${enemy.dataset}`)
+                }
+            })
+
+            //sprawdź co jest z położeniem przeciwników, zacznij od jednego
+
         });
     }
     //metoda tworząca przeciwników na rozpoczęcie gry
@@ -56,7 +93,7 @@ class Game {
             let enemyId = this.genrateID(0, 1000000)
             const enemy = new Enemy(this.htmlElements.allenemies, enemyId);
             enemy.init();
-            this.enemies.push(this.enemy);
+            this.enemies.push(enemy);
         }
     }
 
