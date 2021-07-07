@@ -9,7 +9,7 @@ class Game {
     htmlElements = {
         //uchwycenie statku kosmicznego
         spaceship: document.querySelector('[data-spaceship]'),
-        //uchwycenie div-a container, w którm mieści się cała gra
+        //uchwycenie div-a container, w którym mieści się cała gra
         container: document.querySelector('[data-container]'),
         //uchwycenie rodzica na przeciwników
         allenemies: document.querySelector('[data-enemies]')
@@ -19,7 +19,7 @@ class Game {
     //kontroler interwału dla metody clearUselessProjectiles
     controlGameParametersInterval = null; 
     //liczba wrogów do wygenerowania
-    enemyCounter = 25;
+    enemyCounter = 1;
     //tablica gromadząca wszystkich przeciwników
     enemies = [];
     //metoda inicjalizująca życie gry
@@ -30,9 +30,9 @@ class Game {
         this.controlGameParameters();
         //utwórz przeciwników
         this.createEnemies();
-        // console.log(this.enemies)
+        console.log(this.enemies)
     }
-    //interwał sprawdzający cyklicznie parametry gry, na tąchwilę tylko czyści zbędne pociski
+    //interwał sprawdzający cyklicznie parametry gry, na tą chwilę tylko czyści zbędne pociski
     controlGameParameters = () => {
         this.controlGameParametersInterval = setInterval(() => this.checkPosition(), 1); //Pamiętaj o zrobieniu czyszczenia interwału na zakończenie gry
     }
@@ -78,9 +78,13 @@ class Game {
                     bottom: enemy.element.offsetHeight + enemy.element.offsetTop + allenemiesContainerPosition.top
                 }
                 // console.log(enemyPosition);
-                if (projectilePosition.top <= enemyPosition.bottom && projectilePosition.left >= enemyPosition.left && projectilePosition.right <= enemyPosition.right) {
-                    console.log(`bang! trafiłeś przeciwnika o id ${enemy.dataset}`)
-                }
+                if (projectilePosition.top < enemyPosition.bottom) {
+
+                    // musi być spełniony warunek że pocisk znalazł się na powierzchni przeciwnika, po tym trzeba złapać tego przeciwnika na stronie, nadać stworzyć w miejscu styku obiekt wybuch i go animować, następnie dla obiektu enemy nadać np. klasę powodującą zniknięcie przeciwnika
+
+                    // const hitedEnemy  = document.querySelector('[data-id="${enemy.id}"]');
+                    // console.dir(hitedEnemy)
+                } 
             })
 
             //sprawdź co jest z położeniem przeciwników, zacznij od jednego
@@ -92,8 +96,8 @@ class Game {
         for (let i = 0; i < this.enemyCounter; i+=1) {
             let enemyId = this.genrateID(0, 1000000)
             const enemy = new Enemy(this.htmlElements.allenemies, enemyId);
+            this.enemies = [...this.enemies, enemy];
             enemy.init();
-            this.enemies.push(enemy);
         }
     }
 
