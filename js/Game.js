@@ -19,9 +19,10 @@ class Game {
     //kontroler interwału dla metody clearUselessProjectiles
     controlGameParametersInterval = null; 
     //liczba wrogów do wygenerowania
-    enemyCounter = 1;
+    enemyCounter = 5;
     //tablica gromadząca wszystkich przeciwników
     enemies = [];
+
     //metoda inicjalizująca życie gry
     init = () => {
         //uruchamia metodę klasy spaceship
@@ -30,11 +31,13 @@ class Game {
         this.controlGameParameters();
         //utwórz przeciwników
         this.createEnemies();
-        console.log(this.enemies)
+        // console.log(this.enemies)
     }
     //interwał sprawdzający cyklicznie parametry gry, na tą chwilę tylko czyści zbędne pociski
     controlGameParameters = () => {
-        this.controlGameParametersInterval = setInterval(() => this.checkPosition(), 1); //Pamiętaj o zrobieniu czyszczenia interwału na zakończenie gry
+        this.checkPosition();
+        requestAnimationFrame(this.controlGameParameters);
+        // this.controlGameParametersInterval = setInterval(() => this.checkPosition(), 1); //Pamiętaj o zrobieniu czyszczenia interwału na zakończenie gry
     }
     //metoda kontrolująca położenie każdego wystrzelonego pocisku i jego usunięcie z tablicy jeśli przekroczy górną krawędź planszy
     checkPosition = () => {
@@ -50,7 +53,7 @@ class Game {
                 //odległość dolnej krawędzi pocisku od górnej krawędzi planszy
                 bottom: (projectile.element.offsetTop + projectile.element.offsetHeight)
             }
-            // console.log(projectilePosition);
+            // console.log('Położenie pocisku:', projectilePosition);
 
             //jeśli dolna krawędź pocisku przekroczyła górną krawędź planszy usuń pocisk, wyczyść jego interwał
             if (projectilePosition.bottom < 0) {
@@ -70,25 +73,35 @@ class Game {
             
             // console.log(allenemiesContainerPosition)
 
-            // położenie każdego z przeciwników
+            //położenie iterowanego przeciwnika
                 const enemyPosition = {
                     top: enemy.element.offsetTop + allenemiesContainerPosition.top,
                     left: enemy.element.offsetLeft + allenemiesContainerPosition.left,
                     right: enemy.element.offsetLeft + enemy.element.offsetWidth + allenemiesContainerPosition.left,
                     bottom: enemy.element.offsetHeight + enemy.element.offsetTop + allenemiesContainerPosition.top
                 }
-                // console.log(enemyPosition);
-                if (projectilePosition.top < enemyPosition.bottom) {
+
+                // console.log('Położenie przeciwnika: ', enemyPosition);
+              
+                if (projectilePosition.bottom <= enemyPosition.bottom && projectilePosition.left >= enemyPosition.left && projectilePosition.right <= enemyPosition.right) {
 
                     // musi być spełniony warunek że pocisk znalazł się na powierzchni przeciwnika, po tym trzeba złapać tego przeciwnika na stronie, nadać stworzyć w miejscu styku obiekt wybuch i go animować, następnie dla obiektu enemy nadać np. klasę powodującą zniknięcie przeciwnika
 
-                    // const hitedEnemy  = document.querySelector('[data-id="${enemy.id}"]');
-                    // console.dir(hitedEnemy)
+                    const hitedEnemy  = document.querySelector(`[data-id="${enemy.id}"]`);
+                    // console.log(hitedEnemy)
+                    // console.log(projectile)
+                    projectile.element.className = 'explosion';
+                    setTimeout(() => {
+                        projectile.removeProjectile();
+                        // przeciwnika tylko chowamy żeby pozostałe nie przesuwały się w kontenerze
+                        hitedEnemy.classList.add('hide');
+                    }, 1000);
+                    //z tablicy usuwamy trwale
+                    enemyArr.splice(enemyIndex, 1);
+                    projectileArray.splice(projectileIndex, 1);
+                    console.log(this.ship.projectiles);
                 } 
             })
-
-            //sprawdź co jest z położeniem przeciwników, zacznij od jednego
-
         });
     }
     //metoda tworząca przeciwników na rozpoczęcie gry

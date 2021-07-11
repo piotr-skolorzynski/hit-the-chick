@@ -105,14 +105,13 @@ body {
 
 .enemy__container {
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+
+    border: 1px solid white;
 }
 
 .invader {
@@ -122,12 +121,16 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+
+    border: 1px solid white;
+}
+
+.hide {
+    background-color: transparent;
 }
 
 .explosion {
     position: absolute;
-    bottom: 20%;
-    left: 50%;
     width: 64px;
     height: 64px;
     background-image: url('../img/explosion.png');
@@ -135,6 +138,8 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     animation: showExplosion 1000ms steps(17) forwards;
+
+    border: 1px solid white;
 }
 
 @keyframes showExplosion {
@@ -149,15 +154,15 @@ body {
 
 .explosion--big {
     position: absolute;
-    bottom: 20%;
-    left: 80%;
     width: 128px;
     height: 128px;
     background-image: url('../img/explosion-big.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    animation: showBigExplosion 500ms steps(17) forwards;
+    animation: showBigExplosion 1000ms steps(17) forwards;
+
+    border: 1px solid white;
 }
 
 @keyframes showBigExplosion {
