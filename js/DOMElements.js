@@ -23,3 +23,10 @@ export const createPopup = () => {
     div.innerHTML = html;
     gameContainer.append(div);
 };
+
+export const createSpaceshipContainer = () => {
+    const div = document.createElement('div');
+    div.classList.add('spaceship');
+    div.setAttribute('data-spaceship', '');
+    gameContainer.append(div);
+};
