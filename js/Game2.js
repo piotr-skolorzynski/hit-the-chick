@@ -1,11 +1,13 @@
+import { createGameInfo, createPopup } from "./DOMElements.js";
+
+
 class Game {
     htmlElements = {
 
     }
 
-
     init() {
-        console.log(`żyję ;)`);
+        createGameInfo();
     }
 }
 
