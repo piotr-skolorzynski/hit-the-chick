@@ -27,6 +27,6 @@ export const createPopup = () => {
 export const createSpaceshipContainer = () => {
     const div = document.createElement('div');
     div.classList.add('spaceship');
-    div.setAttribute('data-spaceship', '');
+    div.setAttribute('data-id', 'spaceship');
     gameContainer.append(div);
 };

@@ -3,23 +3,20 @@ import { Spaceship } from "./Spaceship2.js";
 
 
 class Game {
-    htmlElements = {
-        //uchwycenie kontenera reprezentującego statek kosmiczny na stronie
-        spaceship_container: document.querySelector('[data-spaceship]'),
-    }
+    htmlElements = {}
 
     init = () => {
-        createGameInfo();
-        createSpaceshipContainer();
-        this.createSpaceship();
+        createGameInfo(); //utworzenie info o grze na stronie
+        createSpaceshipContainer(); //utworzenie kontenera na statek na stronie
+        this.createSpaceship(); //utworzenie obiektu i odpalenie metody init()
     }
 
     createSpaceship = () => {
-        const gameContainer = document.querySelector('[data-id="game"]');
-        const spaceship = new Spaceship(this.htmlElements.spaceship_container, gameContainer);
-        spaceship.init(); 
+        const gameContainer = document.querySelector('[data-id="game"]'); //pobranie kontenera całej gry
+        const spaceshipContainer = document.querySelector('[data-id="spaceship"]'); //pobranie kontenera statku kosmicznego
+        const spaceship = new Spaceship(spaceshipContainer, gameContainer); // utworzenie statku kosmicznego
+        spaceship.init(); //inicjalizacja jego życia
     }
-
 }
 
 document.addEventListener('DOMContentLoaded', () => {

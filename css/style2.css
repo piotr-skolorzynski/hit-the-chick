@@ -9,6 +9,8 @@ body {
     box-sizing: border-box;
 }
 
+/* game container */
+
 .game__container {
     position: relative;
     width: 100vw;
@@ -20,6 +22,8 @@ body {
     z-index: 0;
 }
 
+/* game results */
+
 .information {
     padding: 2rem 3rem;
     display: flex;
@@ -30,6 +34,28 @@ body {
 .information__content {
     font-size: 3rem;
 }
+
+/* spaceship */
+
+.spaceship {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    background-image: url('../img/spaceship.png');
+    animation: moveShip 300ms steps(8) infinite;
+}
+
+@keyframes moveShip {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        background-position-x: 512px;
+    }
+}
+
+/* popup */
 
 .popup {
     position: absolute;
