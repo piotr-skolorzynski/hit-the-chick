@@ -55,6 +55,17 @@ body {
     }
 }
 
+/* projectile */
+
+.projectile {
+    position: absolute;
+    width: 12px;
+    height: 24px;
+    background-image: url('../img/projectile.png');
+    background-size: cover;
+    background-position: center;
+}
+
 /* popup */
 
 .popup {

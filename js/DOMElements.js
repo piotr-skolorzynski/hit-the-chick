@@ -24,9 +24,15 @@ export const createPopup = () => {
     gameContainer.append(div);
 };
 
+//stworzenie kontenera na statek kosmiczny na planszy
 export const createSpaceshipContainer = () => {
     const div = document.createElement('div');
     div.classList.add('spaceship');
     div.setAttribute('data-id', 'spaceship');
     gameContainer.append(div);
 };
+
+//generator id
+export const genrateId = (min=0, max=1000000) => {
+        return Math.floor(Math.random() * (max - min) + min);
+    }

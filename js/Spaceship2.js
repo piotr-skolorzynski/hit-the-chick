@@ -1,3 +1,5 @@
+import { Projectile } from "./Projectile2.js";
+
 export class Spaceship {
     //zmienne globalne do sterowania okrętem
     moveValue = 5; //wartość przesunięcia statku
@@ -6,9 +8,6 @@ export class Spaceship {
     rightArrow = false;
     upArrow = false;
     downArrow = false;
-
-    // //tablica przechowująca wystrzelone pociski
-    // projectiles = [];
 
     constructor(shipContainer, gameContainer) {
         this.shipContainer = shipContainer;
@@ -30,7 +29,7 @@ export class Spaceship {
 
     //nasłuchuj na przyciskach i zmieniaj ich status
     keyPressListener = () => {
-        //nasłuchuj na wciśnięty przycisk
+        //nasłuchuj na wciśnięty przycisk klawiatury
         document.addEventListener('keydown', e => {
             switch (e.key) {
                 case "Left":
@@ -52,7 +51,7 @@ export class Spaceship {
             }
         });
 
-        //nasłuchuj na odpuszczony przycisk
+        //nasłuchuj na odpuszczony przycisk klawiatury
         document.addEventListener('keyup', e => {
             switch (e.key) {
                 case "Left":
@@ -72,7 +71,7 @@ export class Spaceship {
                     this.downArrow = false;
                     break;
                 case " ":
-                    // this.handleShipFire(); //wystrzel pocisk
+                    this.handleShipFire(); //wystrzel pocisk
                     break;    
             }
         });
@@ -108,5 +107,11 @@ export class Spaceship {
     moveLoop = () => {
         this.controlShipMove();
         requestAnimationFrame(this.moveLoop);
+    }
+
+    //wystrzel pocisk
+    handleShipFire = () => {
+        const projectile = new Projectile(this.getXposition() + this.shipContainer.offsetWidth / 2, this.shipContainer.offsetTop + this.shipContainer.offsetHeight / 2, this.gameContainer);
+        projectile.init(); //nadaj życie posickowi        
     }
 }
