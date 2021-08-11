@@ -33,6 +33,6 @@ export const createSpaceshipContainer = () => {
 };
 
 //generator id
-export const genrateId = (min=0, max=1000000) => {
+export const generateId = (min=0, max=1000000) => {
         return Math.floor(Math.random() * (max - min) + min);
     }

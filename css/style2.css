@@ -64,6 +64,22 @@ body {
     background-image: url('../img/projectile.png');
     background-size: cover;
     background-position: center;
+
+    border: 1px solid white;
+}
+
+/* enemies */
+
+.invader {
+    position: absolute;
+    width: 76px;
+    height: 76px;
+    background-image: url('../img/red-chicken.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    border: 1px solid white;
 }
 
 /* popup */

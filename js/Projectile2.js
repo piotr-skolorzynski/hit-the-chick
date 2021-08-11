@@ -1,4 +1,4 @@
-import { genrateId } from "./DOMElements.js";
+import { generateId } from "./DOMElements.js";
 
 export class Projectile {
 
@@ -8,7 +8,7 @@ export class Projectile {
         this.yPosition = yPosition;
         this.gameContainer = gameContainer; //rodzic czyli główna plansza gry
         this.projectileContainer = document.createElement('div'); //pudełko na wizualną reprezentację pocisku
-        this.projectileId = genrateId();
+        this.projectileId = generateId();
         this.interval = null; //umożliwienie kontroli nad interwałowym przemieszczaniem pocisku
     }
 
