@@ -1,3 +1,4 @@
+import { generateId } from "./DOMElements.js";
 import { Projectile } from "./Projectile2.js";
 
 export class Spaceship {
@@ -9,6 +10,8 @@ export class Spaceship {
     upArrow = false;
     downArrow = false;
 
+    firedProjectilesArray = [];
+
     constructor(shipContainer, gameContainer) {
         this.shipContainer = shipContainer;
         this.gameContainer = gameContainer;
@@ -19,6 +22,7 @@ export class Spaceship {
         this.setPosition();
         this.keyPressListener();
         this.moveLoop();
+        this.controlProjectilesFlight();
     }
 
     //ustaw pozycję obiektu w połowie szerokości, i na dole ekranu
@@ -111,7 +115,28 @@ export class Spaceship {
 
     //wystrzel pocisk
     handleShipFire = () => {
-        const projectile = new Projectile(this.getXposition() + this.shipContainer.offsetWidth / 2, this.shipContainer.offsetTop + this.shipContainer.offsetHeight / 2, this.gameContainer);
-        projectile.init(); //nadaj życie posickowi        
+        const projectileId = generateId();
+        const projectile = new Projectile(this.getXposition() + this.shipContainer.offsetWidth / 2, this.shipContainer.offsetTop + this.shipContainer.offsetHeight / 2, this.gameContainer, projectileId);
+        projectile.init(); //nadaj życie posickowi
+        this.firedProjectilesArray = [...this.firedProjectilesArray, projectile];
+        console.log(this.firedProjectilesArray)
+    }
+
+    //wykonuj w pętli sprawdzenie położenia pocisku i reaguj na sytuację
+    controlProjectilesFlight = () => {
+        this.firedProjectilesArray.map((projectile, projectileIndex, projectilesArray) => {
+            const projectileOnGameboard = document.querySelector(`[data-id="${projectile.id}"]`); //uchwyć kontener posisku na planszy
+            if (projectileOnGameboard) {
+                projectile.top = projectileOnGameboard.offsetTop;
+                projectile.left = projectileOnGameboard.offsetLeft;
+                projectile.right = projectileOnGameboard.offsetLeft + projectileOnGameboard.offsetWidth;
+                projectile.bottom = projectileOnGameboard.offsetTop + projectileOnGameboard.offsetHeight;
+            }
+            if (projectile.bottom < 0) {
+            projectile.removeProjectile();
+            projectilesArray.splice(projectileIndex, 1);            
+            }
+        });
+        requestAnimationFrame(this.controlProjectilesFlight);
     }
 }

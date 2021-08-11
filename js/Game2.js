@@ -4,6 +4,7 @@ import { Enemy } from "./Enemy2.js";
 
 
 class Game {
+    storedEnemiesPosition = []; //tablica na położenie każdego z wygenerowanych przeciwników
 
     init = () => {
         createGameInfo(); //utworzenie info o grze na stronie
@@ -19,10 +20,23 @@ class Game {
         spaceship.init(); //inicjalizacja jego życia
     }
 
+    showFiredProjectiles = () => {
+        console.log(spaceship.firedProjectilesArray)
+        requestAnimationFrame(this.showFiredProjectiles)
+    }
+
     createEnemies = () => {
         const gameContainer = document.querySelector('[data-id="game"]'); //pobranie kontenera całej gry
-        const enemy = new Enemy(gameContainer);
+        const enemy = new Enemy(gameContainer, 30, 30);
         enemy.init();
+        const enemyPosition = enemy.getEnemyPosition();
+        this.storedEnemiesPosition = [...this.storedEnemiesPosition, enemyPosition];
+        const enemy2 = new Enemy(gameContainer, 60, 30);
+        enemy2.init();
+        const enemy2Position = enemy2.getEnemyPosition();
+        this.storedEnemiesPosition = [...this.storedEnemiesPosition, enemy2Position];
+        console.log(this.storedEnemiesPosition)
+        
     }
 
 }
