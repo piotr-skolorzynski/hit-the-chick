@@ -1,4 +1,5 @@
 import { generateId } from "./DOMElements.js";
+import { Enemy } from "./Enemy2.js";
 
 export class Projectile {
 
