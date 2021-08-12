@@ -139,4 +139,4 @@ export class Spaceship {
         });
         requestAnimationFrame(this.controlProjectilesFlight);
     }
-}
+} 
