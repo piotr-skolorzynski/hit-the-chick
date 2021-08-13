@@ -64,8 +64,6 @@ body {
     background-image: url('../img/projectile.png');
     background-size: cover;
     background-position: center;
-
-    border: 1px solid white;
 }
 
 /* enemies */
@@ -78,8 +76,27 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+}
 
-    border: 1px solid white;
+.explosion--big {
+    position: absolute;
+    width: 76px;
+    height: 76px;
+    background-image: url('../img/explosion-big.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: showBigExplosion 1000ms steps(17) forwards;
+}
+
+@keyframes showBigExplosion {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        background-position-x: 2176px;
+    }
 }
 
 /* popup */

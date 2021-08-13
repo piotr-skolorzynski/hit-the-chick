@@ -14,23 +14,22 @@ class Game {
 
     enemiesPositionsArray = []; //tablica aktualnego położenia przeciwników w pikselach
 
+    spaceship = null; //referencja do utwoezonego statku kosmicznego
+
     init = () => {
         createGameInfo(); //utworzenie info o grze na stronie
         createSpaceshipContainer(); //utworzenie kontenera na statek na stronie
         this.createSpaceship(); //utworzenie obiektu statek kosmiczny
         this.createEnemies(); //utworzenie wrogów
         this.controlEnemiesPositionsInPixels(); //monitoruj położenie przeciwników w pixelach
-        console.log(this.enemiesPositionsArray)
+        this.checkProjectilesCollisions(); //monitoruj kolizje pocisków
     }
 
     createSpaceship = () => {
         const gameContainer = document.querySelector('[data-id="game"]'); //pobranie kontenera całej gry
         const spaceshipContainer = document.querySelector('[data-id="spaceship"]'); //pobranie kontenera statku kosmicznego
-        const spaceship = new Spaceship(spaceshipContainer, gameContainer); // utworzenie statku kosmicznego
-        spaceship.init(); //inicjalizacja jego życia
-        // setInterval(() => {
-        //     console.log(spaceship.firedProjectilesArray)
-        // }, 1000);
+        this.spaceship = new Spaceship(spaceshipContainer, gameContainer); // utworzenie statku kosmicznego
+        this.spaceship.init(); //inicjalizacja jego życia
     }
 
     createEnemies = () => {
@@ -41,8 +40,6 @@ class Game {
             enemy.init();
             this.enemiesArray = [...this.enemiesArray, enemy];
         })
-        //skonwertuj odległości przeciwnika na mapie z procentów na pixele
-        console.log(this.enemiesArray)
     }
 
     controlEnemiesPositionsInPixels = () => {
@@ -57,12 +54,28 @@ class Game {
             }
             this.enemiesPositionsArray = [...this.enemiesPositionsArray, enemyPosition];
         })
-        requestAnimationFrame(this.controlEnemiesPositionsInPixels);
     }
 
-    // checkProjectilesColisions = () => {
-        
-    // }
+    checkProjectilesCollisions = () => {
+        this.spaceship.firedProjectilesArray.map ((projectile, projectileIndex, projectilesArray) => {
+            this.enemiesPositionsArray.map(enemyPosition => {
+
+                if (projectile.bottom <= enemyPosition.bottom && projectile.left >= enemyPosition.left && projectile.right <= enemyPosition.right) {
+                    projectile.removeProjectile();//usuń pocisk z planszy
+                    projectilesArray.splice(projectileIndex, 1); //usuń pocisk z tablicy
+                    this.enemiesArray.map((enemy, enemyIndex, enemiesArray) => {
+                        if (enemy.id === enemyPosition.id) {
+                            enemy.isHitted = true; //zmień status bycia trafionym na true 
+                            enemiesArray.splice(enemyIndex, 1); //usuń przeciwnika z tablicy
+                        }
+                    });
+                    this.enemiesPositionsArray = this.enemiesPositionsArray.filter(enemy => enemy.id !== enemyPosition.id)
+                }
+            })
+        })
+
+        requestAnimationFrame(this.checkProjectilesCollisions);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
