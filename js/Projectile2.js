@@ -7,7 +7,7 @@ export class Projectile {
         this.gameContainer = gameContainer; //rodzic czyli główna plansza gry
         this.projectileContainer = document.createElement('div'); //pudełko na wizualną reprezentację pocisku
         this.id = projectileId,
-        this.interval = null; //umożliwienie kontroli nad interwałowym przemieszczaniem pocisku
+        this.interval = null; //id interwału
     }
 
     //inicjacja życia pocisku

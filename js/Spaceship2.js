@@ -1,4 +1,4 @@
-import { generateId } from "./DOMElements.js";
+import { generateNumber } from "./DOMElements.js";
 import { Projectile } from "./Projectile2.js";
 
 export class Spaceship {
@@ -116,11 +116,10 @@ export class Spaceship {
 
     //wystrzel pocisk
     handleShipFire = () => {
-        const projectileId = generateId();
+        const projectileId = generateNumber();
         const projectile = new Projectile(this.getXposition() + this.shipContainer.offsetWidth / 2, this.shipContainer.offsetTop + this.shipContainer.offsetHeight / 2, this.gameContainer, projectileId);
         projectile.init(); //nadaj życie posickowi
         this.firedProjectilesArray = [...this.firedProjectilesArray, projectile];
-        console.log(this.firedProjectilesArray)
     }
 
     //wykonuj w pętli sprawdzenie położenia pocisku i reaguj na sytuację

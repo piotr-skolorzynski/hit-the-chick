@@ -78,6 +78,16 @@ body {
     background-position: center;
 }
 
+.egg {
+    position: absolute;
+    width: 20px;
+    height: 24px;
+    background-image: url('../img/egg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .explosion--big {
     position: absolute;
     width: 76px;
@@ -91,24 +101,12 @@ body {
 
 @keyframes showBigExplosion {
     from {
-        background-position-x: 0;
+        background-position-x: 0;  
     }
 
     to {
         background-position-x: 2176px;
     }
-}
-
-.egg {
-    position: absolute;
-    width: 64px;
-    height: 80px;
-    background-image: url('../img/egg.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    left: 50%;
-    top: 50%;
 }
 
 /* popup */

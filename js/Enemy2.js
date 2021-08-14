@@ -1,4 +1,5 @@
-import { generateId } from "./DOMElements.js";
+import { generateNumber } from "./DOMElements.js";
+import { Egg } from "./Egg.js";
 
 export class Enemy {
 
@@ -6,7 +7,7 @@ export class Enemy {
         this.gameContainer = gameContainer; //rodzic do którego ma trafić
         this.left = left;
         this.top = top;
-        this.id = generateId(); //identyfikator
+        this.id = generateNumber(); //identyfikator
         this.enemyContainer = document.createElement('div'); //kontener reprezentujący obiekt na stronie
         this.isHitted = false; //czy jestem trafiony
         this.interval = null; //interwał do kontroli animacji przeciwnika
@@ -16,6 +17,7 @@ export class Enemy {
         this.setEnemyPosition();
         this.animateEnemyAfterHit();
         this.interval = setInterval(() => this.animateEnemyAfterHit(), 1);
+        this.fireEggs();
     }
 
     setEnemyPosition = () => {
@@ -36,4 +38,14 @@ export class Enemy {
             clearInterval(this.interval);
         }
     }
+
+    fireEggs = () => {
+        const eggId = generateNumber();
+        const enemyOnGameboard = document.querySelector(`[data-id="${this.id}"]`);
+        const left = enemyOnGameboard.offsetLeft + enemyOnGameboard.offsetWidth / 2;
+        const top = enemyOnGameboard.offsetTop + enemyOnGameboard.offsetHeight / 3;
+        const egg = new Egg(left, top, this.gameContainer, eggId);
+        egg.init();
+    }
+
 }
