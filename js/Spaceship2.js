@@ -10,7 +10,8 @@ export class Spaceship {
     upArrow = false;
     downArrow = false;
 
-    firedProjectilesArray = [];
+    firedProjectilesArray = []; //tablica z wystrzelonymi pociskami
+    lives = 3; //startowa liczba żyć 
 
     constructor(shipContainer, gameContainer) {
         this.shipContainer = shipContainer;

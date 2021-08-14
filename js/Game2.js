@@ -2,7 +2,6 @@ import { createGameInfo, createPopup, createSpaceshipContainer } from "./DOMElem
 import { Spaceship } from "./Spaceship2.js";
 import { Enemy } from "./Enemy2.js";
 
-
 class Game {
     enemiesStartingPositions = [
         {left: 15, top: 15}, {left: 25, top: 15}, {left: 35, top: 15}, {left: 45, top: 15}, {left: 55, top: 15},
@@ -14,13 +13,15 @@ class Game {
 
     enemiesPositionsArray = []; //tablica aktualnego położenia przeciwników w pikselach
 
-    spaceship = null; //referencja do utwoezonego statku kosmicznego
+    spaceship = null; //referencja do utworzonego statku kosmicznego
+
+    score = 0; //zdobyte punkty
 
     init = () => {
         createGameInfo(); //utworzenie info o grze na stronie
+        this.createEnemies(); //utworzenie wrogów
         createSpaceshipContainer(); //utworzenie kontenera na statek na stronie
         this.createSpaceship(); //utworzenie obiektu statek kosmiczny
-        this.createEnemies(); //utworzenie wrogów
         this.controlEnemiesPositionsInPixels(); //monitoruj położenie przeciwników w pixelach
         this.checkProjectilesCollisions(); //monitoruj kolizje pocisków
     }
@@ -59,7 +60,6 @@ class Game {
     checkProjectilesCollisions = () => {
         this.spaceship.firedProjectilesArray.map ((projectile, projectileIndex, projectilesArray) => {
             this.enemiesPositionsArray.map(enemyPosition => {
-
                 if (projectile.bottom <= enemyPosition.bottom && projectile.left >= enemyPosition.left && projectile.right <= enemyPosition.right) {
                     projectile.removeProjectile();//usuń pocisk z planszy
                     projectilesArray.splice(projectileIndex, 1); //usuń pocisk z tablicy
@@ -67,14 +67,20 @@ class Game {
                         if (enemy.id === enemyPosition.id) {
                             enemy.isHitted = true; //zmień status bycia trafionym na true 
                             enemiesArray.splice(enemyIndex, 1); //usuń przeciwnika z tablicy
+                            this.score += 1;
+                            this.updateGameScore();
                         }
                     });
                     this.enemiesPositionsArray = this.enemiesPositionsArray.filter(enemy => enemy.id !== enemyPosition.id)
                 }
             })
         })
-
         requestAnimationFrame(this.checkProjectilesCollisions);
+    }
+
+    updateGameScore = () => {
+        const gameScore = document.querySelector('[data-id="score"]');
+        gameScore.innerHTML = `${this.score}`;
     }
 }
 

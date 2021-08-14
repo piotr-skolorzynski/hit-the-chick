@@ -4,8 +4,8 @@ const gameContainer = document.querySelector('[data-id="game"]');
 //wrzucenie do kontenera info o grze tzn. punkty i życia
 export const createGameInfo = () => {
     const html = `<section class="information">
-                        <div class="information__content">Score: 0</div>
-                        <div class="information__content">Lives: 3</div>
+                        <div class="information__content">Score: <span data-id="score">0</span></div>
+                        <div class="information__content">Lives: <span data-id="lives">3</span></div>
                 </section>`;
     gameContainer.innerHTML = html;
 };
