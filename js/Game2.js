@@ -1,4 +1,4 @@
-import { createGameInfo, createPopup, createSpaceshipContainer } from "./DOMElements.js";
+import { createGameInfo, createPopupWin, createPopupLost, createSpaceshipContainer } from "./DOMElements.js";
 import { Spaceship } from "./Spaceship2.js";
 import { Enemy } from "./Enemy2.js";
 

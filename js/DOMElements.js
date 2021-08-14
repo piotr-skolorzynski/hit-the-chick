@@ -10,13 +10,27 @@ export const createGameInfo = () => {
     gameContainer.innerHTML = html;
 };
 
-//stworzenie popup-a w celu umożliwienia nowej gry
-export const createPopup = () => {
+//stworzenie popup-a po przegraniu
+export const createPopupLost = score => {
     const div = document.createElement('div');
     div.classList.add('popup');
     const html = `<div class="popup__content">
                         <p class="popup__text">
-                            You have lost! Try again!
+                            You have lost! Your score is: ${score} Try again!
+                        </p>
+                        <button class="popup__btn">New Game</button>
+                </div>`;
+    div.innerHTML = html;
+    gameContainer.append(div);
+};
+
+//stworzenie popup-a po przegraniu
+export const createPopupWin = () => {
+    const div = document.createElement('div');
+    div.classList.add('popup');
+    const html = `<div class="popup__content">
+                        <p class="popup__text">
+                            You have won! Try again!
                         </p>
                         <button class="popup__btn">New Game</button>
                 </div>`;
