@@ -99,6 +99,18 @@ body {
     }
 }
 
+.egg {
+    position: absolute;
+    width: 64px;
+    height: 80px;
+    background-image: url('../img/egg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    left: 50%;
+    top: 50%;
+}
+
 /* popup */
 
 .popup {
