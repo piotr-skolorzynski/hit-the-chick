@@ -11,13 +11,15 @@ export class Enemy {
         this.enemyContainer = document.createElement('div'); //kontener reprezentujący obiekt na stronie
         this.isHitted = false; //czy jestem trafiony
         this.interval = null; //interwał do kontroli animacji przeciwnika
+        this.eggIntervalLength = generateNumber(5000, 12000); //losowo ustaw interwał w generowaniu jaj
+        this.eggGeneratorInterval = null; //interwał do kontroli generacji jaj
     }
 
     init = () => {
         this.setEnemyPosition();
         this.animateEnemyAfterHit();
         this.interval = setInterval(() => this.animateEnemyAfterHit(), 1);
-        this.fireEggs();
+        this.eggGeneratorInterval = setInterval(() => this.fireEggs(), this.eggIntervalLength);
     }
 
     setEnemyPosition = () => {
@@ -35,6 +37,7 @@ export class Enemy {
             setTimeout(() => {
                 enemyOnGameboard.remove();
             }, 1000);
+            clearInterval(this.eggGeneratorInterval);
             clearInterval(this.interval);
         }
     }
