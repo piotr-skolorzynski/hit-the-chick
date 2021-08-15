@@ -88,6 +88,16 @@ body {
     background-position: center;
 }
 
+.broken-egg {
+    position: absolute;
+    width: 30px;
+    height: 28px;
+    background-image: url('../img/broken-egg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .explosion--big {
     position: absolute;
     width: 76px;
