@@ -16,6 +16,7 @@ export class Spaceship {
     constructor(shipContainer, gameContainer) {
         this.shipContainer = shipContainer;
         this.gameContainer = gameContainer;
+        this.isHitted = false;
     }
 
     //umożliwia uruchomienie właściwości obiektu
@@ -125,7 +126,7 @@ export class Spaceship {
     //wykonuj w pętli sprawdzenie położenia pocisku i reaguj na sytuację
     controlProjectilesFlight = () => {
         this.firedProjectilesArray.map((projectile, projectileIndex, projectilesArray) => {
-            const projectileOnGameboard = document.querySelector(`[data-id="${projectile.id}"]`); //uchwyć kontener posisku na planszy
+            const projectileOnGameboard = document.querySelector(`[data-id="${projectile.id}"]`); //uchwyć kontener pocisku na planszy
             if (projectileOnGameboard) {
                 projectile.top = projectileOnGameboard.offsetTop;
                 projectile.left = projectileOnGameboard.offsetLeft;

@@ -3,6 +3,8 @@ import { Egg } from "./Egg.js";
 
 export class Enemy {
 
+    firedEggsArray = []; //tablica na wystrzelone jaja
+
     constructor(gameContainer, left, top) {
         this.gameContainer = gameContainer; //rodzic do którego ma trafić
         this.left = left;
@@ -11,7 +13,7 @@ export class Enemy {
         this.enemyContainer = document.createElement('div'); //kontener reprezentujący obiekt na stronie
         this.isHitted = false; //czy jestem trafiony
         this.interval = null; //interwał do kontroli animacji przeciwnika
-        this.eggIntervalLength = generateNumber(5000, 12000); //losowo ustaw interwał w generowaniu jaj
+        this.eggIntervalLength = generateNumber(7000, 20000); //losowo ustaw interwał w generowaniu jaj
         this.eggGeneratorInterval = null; //interwał do kontroli generacji jaj
         this.animateEnemyMoveInterval = null;
     }
@@ -21,7 +23,8 @@ export class Enemy {
         this.animateEnemyAfterHit();
         this.interval = setInterval(() => this.animateEnemyAfterHit(), 1);
         this.eggGeneratorInterval = setInterval(() => this.fireEggs(), this.eggIntervalLength);
-        this.animateEnemyMoveInterval = setInterval(() => this.animateEnemyMove(), 20000);
+        // this.animateEnemyMoveInterval = setInterval(() => this.animateEnemyMove(), 20000);
+        this.checkEggsCollisionsInterval = setInterval(() => this.checkEggsCollisions(), 1);
     }
 
     setEnemyPosition = () => {
@@ -104,6 +107,19 @@ export class Enemy {
             clearInterval(this.eggGeneratorInterval);
             clearInterval(this.interval);
             clearInterval(this.animateEnemyMoveInterval);
+            clearInterval(this.checkEggsCollisionsInterval);
+            //po trafierniu przecwinika wszystkie wytrzelone jaja mają się rozwalić a tablica wyzerować
+            this.firedEggsArray.map(egg => {
+                const eggOnGameboard = document.querySelector(`[data-id="${egg.id}"]`);
+                eggOnGameboard.classList.add('broken-egg');
+                eggOnGameboard.classList.remove('egg');
+                clearInterval(egg.eggMoveInterval);
+                const timeOutInterval = setTimeout(() => {
+                    eggOnGameboard.remove();
+                    clearTimeout(timeOutInterval);
+                }, 1000);
+            });
+            this.firedEggsArray = null;
         }
     }
 
@@ -114,6 +130,24 @@ export class Enemy {
         const top = enemyOnGameboard.offsetTop + enemyOnGameboard.offsetHeight / 3;
         const egg = new Egg(left, top, this.gameContainer, eggId);
         egg.init();
+        this.firedEggsArray = [...this.firedEggsArray, egg];
     }
 
+    checkEggsCollisions = () => {
+
+        this.firedEggsArray.map((egg, eggIndex, eggsArray) => {
+            const eggOnGameboard = document.querySelector(`[data-id="${egg.id}"]`);
+            //czyszczenie jaj z gry i tablicy które nie trafiły
+            if (eggOnGameboard.offsetTop >= window.innerHeight * egg.whenToBroke) {
+                eggOnGameboard.classList.add('broken-egg');
+                eggOnGameboard.classList.remove('egg');
+                clearInterval(egg.eggMoveInterval);
+                eggsArray.splice(eggIndex, 1); //usuń jajo z tablicy
+                const timeOutInterval = setTimeout(() => {
+                    eggOnGameboard.remove();
+                    clearTimeout(timeOutInterval);
+                }, 1000);
+            }
+        })
+    }
 }

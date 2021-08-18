@@ -24,6 +24,7 @@ class Game {
         this.createSpaceship(); //utworzenie obiektu statek kosmiczny
         this.controlEnemiesPositionsInPixels(); //monitoruj położenie przeciwników w pixelach
         this.checkProjectilesCollisions(); //monitoruj kolizje pocisków
+        // this.checkSpaceshipCollisions(); //monitoruj kolizje statku z jajami 
     }
 
     createSpaceship = () => {
@@ -81,6 +82,23 @@ class Game {
     updateGameScore = () => {
         const gameScore = document.querySelector('[data-id="score"]');
         gameScore.innerHTML = `${this.score}`;
+    }
+
+    checkSpaceshipCollisions = () => {
+        const spaceshipOnGameboard = document.querySelector('[data-id="spaceship"]');
+        const spaceshipLeft = spaceshipOnGameboard.offsetLeft;
+        const spaceshipTop = spaceshipOnGameboard.offsetTop;
+        const spaceshipInnerWidth = spaceshipOnGameboard.offsetWidth;
+        const spaceshipInnerHeight = spaceshipOnGameboard.offsetHeight;
+
+        // console.log(spaceshipLeft, spaceshipTop, spaceshipInnerWidth, spaceshipInnerHeight);
+        this.enemiesArray.map(enemy => {
+            enemy.firedEggsArray.map((egg, index) => {
+                console.log('jajko', index)
+            })
+        })
+
+        requestAnimationFrame(this.checkSpaceshipCollisions);
     }
 }
 
