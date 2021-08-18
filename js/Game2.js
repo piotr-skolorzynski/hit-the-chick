@@ -15,16 +15,16 @@ class Game {
 
     spaceship = null; //referencja do utworzonego statku kosmicznego
 
-    score = 0; //zdobyte punkty
+    score = null; //zdobyte punkty
 
     init = () => {
         createGameInfo(); //utworzenie info o grze na stronie
         this.createEnemies(); //utworzenie wrogów
         createSpaceshipContainer(); //utworzenie kontenera na statek na stronie
         this.createSpaceship(); //utworzenie obiektu statek kosmiczny
-        this.controlEnemiesPositionsInPixels(); //monitoruj położenie przeciwników w pixelach
-        this.checkProjectilesCollisions(); //monitoruj kolizje pocisków
-        // this.checkSpaceshipCollisions(); //monitoruj kolizje statku z jajami 
+        this.controlEnemiesPositionsInPixelsInterval = setInterval(() => this.controlEnemiesPositionsInPixels()); //monitoruj położenie przeciwników w pixelach
+        this.checkProjectilesCollisionsInterval = setInterval(() => this.checkProjectilesCollisions(), 1); //monitoruj kolizje pocisków
+        this.checkSpaceshipCollisionsInterval = setInterval(() => this.checkSpaceshipCollisions(), 1); //monitoruj kolizje statku z jajami 
     }
 
     createSpaceship = () => {
@@ -76,7 +76,13 @@ class Game {
                 }
             })
         })
-        requestAnimationFrame(this.checkProjectilesCollisions);
+        //sprawdzenie czy wrogowie jesze istnieją
+        if (this.enemiesArray.length === 0) {
+            createPopupWin(this.score);
+            this.endgame();
+            const newGameBtn = document.querySelector('[data-id="newgame"]');
+            newGameBtn.addEventListener('click', () => this.game.init()); //to nie działa
+        }
     }
 
     updateGameScore = () => {
@@ -88,17 +94,43 @@ class Game {
         const spaceshipOnGameboard = document.querySelector('[data-id="spaceship"]');
         const spaceshipLeft = spaceshipOnGameboard.offsetLeft;
         const spaceshipTop = spaceshipOnGameboard.offsetTop;
-        const spaceshipInnerWidth = spaceshipOnGameboard.offsetWidth;
-        const spaceshipInnerHeight = spaceshipOnGameboard.offsetHeight;
+        const spaceshipRight = spaceshipLeft + spaceshipOnGameboard.offsetWidth;
 
-        // console.log(spaceshipLeft, spaceshipTop, spaceshipInnerWidth, spaceshipInnerHeight);
         this.enemiesArray.map(enemy => {
-            enemy.firedEggsArray.map((egg, index) => {
-                console.log('jajko', index)
+            enemy.firedEggsArray.map(egg => {
+                const eggOnGameboard = document.querySelector(`[data-id="${egg.id}"]`);
+                const eggLeft = eggOnGameboard.offsetLeft;
+                const eggTop = eggOnGameboard.offsetTop;
+                const eggRight = eggLeft + eggOnGameboard.offsetWidth;
+                const eggBottom = eggTop + eggOnGameboard.offsetHeight;
+
+                if (eggBottom >= spaceshipTop && egg.left >= spaceshipLeft && eggRight <= spaceshipRight) {
+                    console.log('warunek trafienia spełniony')
+                    eggOnGameboard.classList.add('explosion--big');
+                    eggOnGameboard.classList.remove('egg');
+                    this.spaceship.lives -= 1;
+                    if (this.spaceship.lives <= 0) {
+                        this.endgame();
+                        createPopupLost();
+                        const newGameBtn = document.querySelector('[data-id="newgame"]');
+                        newGameBtn.addEventListener('click', () => game.init());
+                    } else {
+                        const showLives = document.querySelector('[data-id="lives"]');
+                        showLives.innerText = `${this.spaceship.lives}`;
+                    }
+                }
             })
         })
+    }
 
-        requestAnimationFrame(this.checkSpaceshipCollisions);
+    endgame = () => {
+        clearInterval(this.controlEnemiesPositionsInPixelsInterval);
+        clearInterval(this.checkProjectilesCollisionsInterval);
+        clearInterval(this.checkSpaceshipCollisionsInterval);
+        this.enemiesArray = null;
+        this.enemiesPositionsArray = null;
+        this.spaceship = null;
+        this.score = 0;
     }
 }
 

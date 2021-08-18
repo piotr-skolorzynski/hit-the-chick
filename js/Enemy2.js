@@ -13,7 +13,7 @@ export class Enemy {
         this.enemyContainer = document.createElement('div'); //kontener reprezentujący obiekt na stronie
         this.isHitted = false; //czy jestem trafiony
         this.interval = null; //interwał do kontroli animacji przeciwnika
-        this.eggIntervalLength = generateNumber(7000, 20000); //losowo ustaw interwał w generowaniu jaj
+        this.eggIntervalLength = generateNumber(10000, 30000); //losowo ustaw interwał w generowaniu jaj
         this.eggGeneratorInterval = null; //interwał do kontroli generacji jaj
         this.animateEnemyMoveInterval = null;
     }
@@ -141,6 +141,15 @@ export class Enemy {
             if (eggOnGameboard.offsetTop >= window.innerHeight * egg.whenToBroke) {
                 eggOnGameboard.classList.add('broken-egg');
                 eggOnGameboard.classList.remove('egg');
+                clearInterval(egg.eggMoveInterval);
+                eggsArray.splice(eggIndex, 1); //usuń jajo z tablicy
+                const timeOutInterval = setTimeout(() => {
+                    eggOnGameboard.remove();
+                    clearTimeout(timeOutInterval);
+                }, 1000);
+            }
+            //usuwanie z tablicy oraz planszy jaj które explodowały 
+            if (eggOnGameboard.classList.contains('explosion--big')) {
                 clearInterval(egg.eggMoveInterval);
                 eggsArray.splice(eggIndex, 1); //usuń jajo z tablicy
                 const timeOutInterval = setTimeout(() => {

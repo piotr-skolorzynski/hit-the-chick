@@ -11,12 +11,11 @@ export class Spaceship {
     downArrow = false;
 
     firedProjectilesArray = []; //tablica z wystrzelonymi pociskami
-    lives = 3; //startowa liczba żyć 
 
     constructor(shipContainer, gameContainer) {
         this.shipContainer = shipContainer;
         this.gameContainer = gameContainer;
-        this.isHitted = false;
+        this.lives = 3; //startowa liczba żyć 
     }
 
     //umożliwia uruchomienie właściwości obiektu

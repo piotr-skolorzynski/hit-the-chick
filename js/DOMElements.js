@@ -18,13 +18,13 @@ export const createPopupLost = score => {
                         <p class="popup__text">
                             You have lost! Your score is: ${score} Try again!
                         </p>
-                        <button class="popup__btn">New Game</button>
+                        <button data-id="newgame" class="popup__btn">New Game</button>
                 </div>`;
     div.innerHTML = html;
     gameContainer.append(div);
 };
 
-//stworzenie popup-a po przegraniu
+//stworzenie popup-a po wygraniu
 export const createPopupWin = () => {
     const div = document.createElement('div');
     div.classList.add('popup');
@@ -32,7 +32,7 @@ export const createPopupWin = () => {
                         <p class="popup__text">
                             You have won! Try again!
                         </p>
-                        <button class="popup__btn">New Game</button>
+                        <button data-id="newgame" class="popup__btn">New Game</button>
                 </div>`;
     div.innerHTML = html;
     gameContainer.append(div);
