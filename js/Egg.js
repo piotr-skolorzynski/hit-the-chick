@@ -29,6 +29,3 @@ export class Egg {
         this.eggMoveInterval = setInterval(() => this.eggContainer.style.top = `${this.eggContainer.offsetTop + 1}px`, this.speed); 
     }
 }
-
-// druga funkcja to sprawdzanie czy jajo trafiło w statek
-//kolejny krok to gra ma iterować po przeciwnikach i sprawdzać czy któryś trafił i odejmować życie statkowi
