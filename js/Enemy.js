@@ -16,7 +16,7 @@ export class Enemy {
         this.setEnemyPosition();
         this.animateEnemyAfterHit();
         this.interval = setInterval(() => this.animateEnemyAfterHit(), 1);
-        // this.animateEnemyMoveInterval = setInterval(() => this.animateEnemyMove(), 20000); //animacja wrogów
+        this.animateEnemyMoveInterval = setInterval(() => this.animateEnemyMove(), 20000); //animacja wrogów
     }
 
     setEnemyPosition = () => {
@@ -83,22 +83,23 @@ export class Enemy {
         }, 6000);
 
         //zatrzymaj ruch w prawo
-        setTimeout(() => {
+        const stopMoveRight = setTimeout(() => {
             clearInterval(intervalIdNumFive);
             clearTimeout(timeoutIdNumFour);
+            return clearTimeout(stopMoveRight);
         }, 7200);
     }
 
     animateEnemyAfterHit = () => {
         if (this.isHitted) {
+            clearInterval(this.interval);
+            clearInterval(this.animateEnemyMoveInterval);
             const enemyOnGameboard = document.querySelector(`[data-id="${this.id}"]`);
             enemyOnGameboard.classList.add('explosion--big'); //nie usuwam klasy inavder bo jest przesłaniana poprzez położenie tej klasy niżej w kodzie
             const timeout = setTimeout(() => {
                 enemyOnGameboard.remove();
                 return clearTimeout(timeout);
             }, 1000);
-            clearInterval(this.interval);
-            clearInterval(this.animateEnemyMoveInterval);
         }
     }
 }

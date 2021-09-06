@@ -5,10 +5,10 @@ import { Egg } from "./Egg.js";
 
 class Game {
     enemiesStartingPositions = [
-        {left: 15, top: 15}, {left: 25, top: 15}, {left: 35, top: 15}, {left: 45, top: 15}, {left: 55, top: 15},
-        
+        {left: 25, top: 15}, {left: 35, top: 15}, {left: 45, top: 15}, {left: 55, top: 15}, {left: 65, top: 15},
+        {left: 20, top: 25}, {left: 30, top: 25}, {left: 40, top: 25}, {left: 50, top: 25}, {left: 60, top: 25},
+        {left: 70, top: 25}
     ]
-    // {left: 20, top: 25}, {left: 30, top: 25}, {left: 40, top: 25}, {left: 50, top: 25}, 
     // {left: 15, top: 35}, {left: 25, top: 35}, {left: 35, top: 35}, {left: 45, top: 35}, {left: 55, top: 35}
 
     enemiesArray = []; //tablica przeciwników
@@ -29,7 +29,6 @@ class Game {
         this.controlEnemiesPositionsInPixelsInterval = setInterval(() => this.controlEnemiesPositionsInPixels()); //monitoruj położenie przeciwników w pixelach
         this.checkProjectilesCollisionsInterval = setInterval(() => this.checkProjectilesCollisions(), 1); //monitoruj kolizje pocisków
         this.checkSpaceshipCollisionsInterval = setInterval(() => this.checkSpaceshipCollisions(), 1); //monitoruj kolizje statku z jajami 
-
         this.generateEggsInterval = setInterval(() => this.fireEggs(), 5000); //generuj jaja
         this.checkEggsCollisionsInterval = setInterval(() => this.checkEggsCollisions(), 1); //czyść które nie trafiły i animuj te które trafiły
     }
@@ -52,7 +51,7 @@ class Game {
     }
 
     controlEnemiesPositionsInPixels = () => {
-        this.enemiesArray.map(enemy => {
+        this.enemiesArray.map((enemy, enemyIndex) => {
             const enemyOnGameboard = document.querySelector(`[data-id="${enemy.id}"]`)
             const enemyPosition = {
                 id: enemy.id,
@@ -61,7 +60,7 @@ class Game {
                 right: enemyOnGameboard.offsetLeft + enemyOnGameboard.offsetWidth,
                 bottom: enemyOnGameboard.offsetTop + enemyOnGameboard.offsetHeight
             }
-            this.enemiesPositionsArray = [...this.enemiesPositionsArray, enemyPosition];
+            this.enemiesPositionsArray.splice(enemyIndex, 1, enemyPosition);
         })
     }
 
@@ -88,7 +87,10 @@ class Game {
             createPopupWin(this.score);
             this.endgame();
             const newGameBtn = document.querySelector('[data-id="newgame"]');
-            newGameBtn.addEventListener('click', () => this.game.init()); //to nie działa
+            newGameBtn.addEventListener('click', () => {
+                const newGame = new Game();
+                newGame.init()
+            }); 
         }
     }
 
@@ -115,10 +117,13 @@ class Game {
                 eggOnGameboard.classList.remove('egg');
                 this.spaceship.lives -= 1;
                 if (this.spaceship.lives <= 0) {
+                    createPopupLost(this.score);
                     this.endgame();
-                    createPopupLost();
                     const newGameBtn = document.querySelector('[data-id="newgame"]');
-                    newGameBtn.addEventListener('click', () => game.init());
+                    newGameBtn.addEventListener('click', () => {
+                        const newGame = new Game();
+                        newGame.init();
+                    });
                 } else {
                     const showLives = document.querySelector('[data-id="lives"]');
                     showLives.innerText = `${this.spaceship.lives}`;
@@ -171,10 +176,14 @@ class Game {
         clearInterval(this.controlEnemiesPositionsInPixelsInterval);
         clearInterval(this.checkProjectilesCollisionsInterval);
         clearInterval(this.checkSpaceshipCollisionsInterval);
-        this.enemiesArray = null;
-        this.enemiesPositionsArray = null;
+        clearInterval(this.generateEggsInterval);
+        clearInterval(this.checkEggsCollisionsInterval);
+        this.enemiesStartingPositions = [];
+        this.enemiesArray = [];
+        this.enemiesPositionsArray = [];
         this.spaceship = null;
         this.score = 0;
+        this.firedEggsArray = [];
     }
 }
 
