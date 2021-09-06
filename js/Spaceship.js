@@ -1,5 +1,5 @@
 import { generateNumber } from "./DOMElements.js";
-import { Projectile } from "./Projectile2.js";
+import { Projectile } from "./Projectile.js";
 
 export class Spaceship {
     //zmienne globalne do sterowania okrętem

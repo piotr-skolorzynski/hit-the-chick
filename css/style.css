@@ -9,7 +9,9 @@ body {
     box-sizing: border-box;
 }
 
-.container {
+/* game container */
+
+.game__container {
     position: relative;
     width: 100vw;
     height: 100vh;
@@ -19,6 +21,8 @@ body {
     background-repeat: no-repeat;
     z-index: 0;
 }
+
+/* game results */
 
 .information {
     padding: 2rem 3rem;
@@ -30,6 +34,92 @@ body {
 .information__content {
     font-size: 3rem;
 }
+
+/* spaceship */
+
+.spaceship {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    background-image: url('../img/spaceship.png');
+    animation: moveShip 300ms steps(8) infinite;
+}
+
+@keyframes moveShip {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        background-position-x: 512px;
+    }
+}
+
+/* projectile */
+
+.projectile {
+    position: absolute;
+    width: 12px;
+    height: 24px;
+    background-image: url('../img/projectile.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* enemies */
+
+.invader {
+    position: absolute;
+    width: 76px;
+    height: 76px;
+    background-image: url('../img/red-chicken.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.egg {
+    position: absolute;
+    width: 20px;
+    height: 24px;
+    background-image: url('../img/egg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.broken-egg {
+    position: absolute;
+    width: 30px;
+    height: 28px;
+    background-image: url('../img/broken-egg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.explosion--big {
+    position: absolute;
+    width: 76px;
+    height: 76px;
+    background-image: url('../img/explosion-big.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: showBigExplosion 1000ms steps(17) forwards;
+}
+
+@keyframes showBigExplosion {
+    from {
+        background-position-x: 0;  
+    }
+
+    to {
+        background-position-x: 2176px;
+    }
+}
+
+/* popup */
 
 .popup {
     position: absolute;
@@ -71,107 +161,3 @@ body {
 .popup__btn:hover {
     box-shadow: 0 0 25px 5px var(--primary-color);
 }
-
-.hide {
-    display: none;
-}
-
-.spaceship {
-    position: absolute;
-    width: 64px;
-    height: 64px;
-    background-image: url('../img/spaceship.png');
-    animation: moveShip 300ms steps(8) infinite;
-}
-
-@keyframes moveShip {
-    from {
-        background-position-x: 0;
-    }
-
-    to {
-        background-position-x: 512px;
-    }
-}
-
-.projectile {
-    position: absolute;
-    width: 12px;
-    height: 24px;
-    background-image: url('../img/projectile.png');
-    background-size: cover;
-    background-position: center;
-}
-
-.enemy__container {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border: 1px solid white;
-}
-
-.invader {
-    width: 76px;
-    height: 76px;
-    background-image: url('../img/red-chicken.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: 1px solid white;
-}
-
-.hide {
-    background-color: transparent;
-}
-
-.explosion {
-    position: absolute;
-    width: 64px;
-    height: 64px;
-    background-image: url('../img/explosion.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    animation: showExplosion 1000ms steps(17) forwards;
-
-    border: 1px solid white;
-}
-
-@keyframes showExplosion {
-    from {
-        background-position-x: 0;
-    }
-
-    to {
-        background-position-x: 1088px;
-    }
-}
-
-.explosion--big {
-    position: absolute;
-    width: 128px;
-    height: 128px;
-    background-image: url('../img/explosion-big.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    animation: showBigExplosion 1000ms steps(17) forwards;
-
-    border: 1px solid white;
-}
-
-@keyframes showBigExplosion {
-    from {
-        background-position-x: 0;
-    }
-
-    to {
-        background-position-x: 2176px;
-    }
-}
-
-

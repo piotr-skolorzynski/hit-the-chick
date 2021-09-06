@@ -23,7 +23,7 @@ export class Enemy {
         this.animateEnemyAfterHit();
         this.interval = setInterval(() => this.animateEnemyAfterHit(), 1);
         this.eggGeneratorInterval = setInterval(() => this.fireEggs(), this.eggIntervalLength);
-        // this.animateEnemyMoveInterval = setInterval(() => this.animateEnemyMove(), 20000);
+        this.animateEnemyMoveInterval = setInterval(() => this.animateEnemyMove(), 20000);
         this.checkEggsCollisionsInterval = setInterval(() => this.checkEggsCollisions(), 1);
     }
 
