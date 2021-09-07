@@ -179,10 +179,18 @@ class Game {
         clearInterval(this.generateEggsInterval);
         clearInterval(this.checkEggsCollisionsInterval);
         this.enemiesStartingPositions = [];
+        this.enemiesArray.forEach(enemy => {
+            const enemyOnGameboard = document.querySelector(`[data-id="${enemy.id}"]`);
+            enemyOnGameboard.remove();
+        })
         this.enemiesArray = [];
         this.enemiesPositionsArray = [];
         this.spaceship = null;
         this.score = 0;
+        this.firedEggsArray.forEach(egg => {
+            const eggOnGameboard = document.querySelector(`[data-id="${egg.id}"]`);
+            eggOnGameboard.remove();
+        })
         this.firedEggsArray = [];
     }
 }

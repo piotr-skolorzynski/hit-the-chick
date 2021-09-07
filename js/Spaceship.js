@@ -67,14 +67,15 @@ export class Spaceship {
                 case "ArrowRight":
                     this.rightArrow = false;
                     break;
-                case "Up":
-                case "ArrowUp":
-                    this.upArrow = false;
-                    break;
-                case "Down":
-                case "ArrowDown":
-                    this.downArrow = false;
-                    break;
+                //kod specjalnie wyłączony, trudniej się gra nie mogąc latać góra dół
+                // case "Up":
+                // case "ArrowUp":
+                //     this.upArrow = false;
+                //     break;
+                // case "Down":
+                // case "ArrowDown":
+                //     this.downArrow = false;
+                //     break;
                 case " ":
                     this.handleShipFire(); //wystrzel pocisk
                     break;    
@@ -100,12 +101,12 @@ export class Spaceship {
         if (this.rightArrow && this.getXposition() < window.innerWidth - this.shipContainer.offsetWidth - 5) {
             this.shipContainer.style.left = `${this.getXposition() + this.moveValue}px`;
         }
-        if (this.upArrow && this.getYposition() < window.innerHeight - this.shipContainer.offsetHeight - 5) {
-            this.shipContainer.style.bottom = `${this.getYposition() + this.moveValue}px`;
-        }
-        if (this.downArrow && this.getYposition() > 0) {
-            this.shipContainer.style.bottom = `${this.getYposition() - this.moveValue}px`;
-        }
+        // if (this.upArrow && this.getYposition() < window.innerHeight - this.shipContainer.offsetHeight - 5) {
+        //     this.shipContainer.style.bottom = `${this.getYposition() + this.moveValue}px`;
+        // }
+        // if (this.downArrow && this.getYposition() > 0) {
+        //     this.shipContainer.style.bottom = `${this.getYposition() - this.moveValue}px`;
+        // }
     }
     
     //pętla uruchamiająca z częstotliwością działania requestAnimationFrame funkcję controlShipMove
