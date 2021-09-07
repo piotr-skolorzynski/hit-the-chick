@@ -1,10 +1,6 @@
 import { generateNumber } from "./DOMElements.js";
-import { Egg } from "./Egg.js";
 
 export class Enemy {
-
-    firedEggsArray = []; //tablica na wystrzelone jaja
-
     constructor(gameContainer, left, top) {
         this.gameContainer = gameContainer; //rodzic do którego ma trafić
         this.left = left;
@@ -13,8 +9,6 @@ export class Enemy {
         this.enemyContainer = document.createElement('div'); //kontener reprezentujący obiekt na stronie
         this.isHitted = false; //czy jestem trafiony
         this.interval = null; //interwał do kontroli animacji przeciwnika
-        this.eggIntervalLength = generateNumber(10000, 30000); //losowo ustaw interwał w generowaniu jaj
-        this.eggGeneratorInterval = null; //interwał do kontroli generacji jaj
         this.animateEnemyMoveInterval = null;
     }
 
@@ -22,9 +16,7 @@ export class Enemy {
         this.setEnemyPosition();
         this.animateEnemyAfterHit();
         this.interval = setInterval(() => this.animateEnemyAfterHit(), 1);
-        this.eggGeneratorInterval = setInterval(() => this.fireEggs(), this.eggIntervalLength);
-        this.animateEnemyMoveInterval = setInterval(() => this.animateEnemyMove(), 20000);
-        this.checkEggsCollisionsInterval = setInterval(() => this.checkEggsCollisions(), 1);
+        this.animateEnemyMoveInterval = setInterval(() => this.animateEnemyMove(), 20000); //animacja wrogów
     }
 
     setEnemyPosition = () => {
@@ -91,72 +83,23 @@ export class Enemy {
         }, 6000);
 
         //zatrzymaj ruch w prawo
-        setTimeout(() => {
+        const stopMoveRight = setTimeout(() => {
             clearInterval(intervalIdNumFive);
             clearTimeout(timeoutIdNumFour);
+            return clearTimeout(stopMoveRight);
         }, 7200);
     }
 
     animateEnemyAfterHit = () => {
         if (this.isHitted) {
-            const enemyOnGameboard = document.querySelector(`[data-id="${this.id}"]`);
-            enemyOnGameboard.classList.add('explosion--big'); //nie usuwam klasy inavder bo jest przesłaniana poprzez położenie tej klasy niżej w kodzie
-            setTimeout(() => {
-                enemyOnGameboard.remove();
-            }, 1000);
-            clearInterval(this.eggGeneratorInterval);
             clearInterval(this.interval);
             clearInterval(this.animateEnemyMoveInterval);
-            clearInterval(this.checkEggsCollisionsInterval);
-            //po trafierniu przecwinika wszystkie wytrzelone jaja mają się rozwalić a tablica wyzerować
-            this.firedEggsArray.map(egg => {
-                const eggOnGameboard = document.querySelector(`[data-id="${egg.id}"]`);
-                eggOnGameboard.classList.add('broken-egg');
-                eggOnGameboard.classList.remove('egg');
-                clearInterval(egg.eggMoveInterval);
-                const timeOutInterval = setTimeout(() => {
-                    eggOnGameboard.remove();
-                    clearTimeout(timeOutInterval);
-                }, 1000);
-            });
-            this.firedEggsArray = null;
+            const enemyOnGameboard = document.querySelector(`[data-id="${this.id}"]`);
+            enemyOnGameboard.classList.add('explosion--big'); //nie usuwam klasy inavder bo jest przesłaniana poprzez położenie tej klasy niżej w kodzie
+            const timeout = setTimeout(() => {
+                enemyOnGameboard.remove();
+                return clearTimeout(timeout);
+            }, 1000);
         }
-    }
-
-    fireEggs = () => {
-        const eggId = generateNumber();
-        const enemyOnGameboard = document.querySelector(`[data-id="${this.id}"]`);
-        const left = enemyOnGameboard.offsetLeft + enemyOnGameboard.offsetWidth / 2;
-        const top = enemyOnGameboard.offsetTop + enemyOnGameboard.offsetHeight / 3;
-        const egg = new Egg(left, top, this.gameContainer, eggId);
-        egg.init();
-        this.firedEggsArray = [...this.firedEggsArray, egg];
-    }
-
-    checkEggsCollisions = () => {
-
-        this.firedEggsArray.map((egg, eggIndex, eggsArray) => {
-            const eggOnGameboard = document.querySelector(`[data-id="${egg.id}"]`);
-            //czyszczenie jaj z gry i tablicy które nie trafiły
-            if (eggOnGameboard.offsetTop >= window.innerHeight * egg.whenToBroke) {
-                eggOnGameboard.classList.add('broken-egg');
-                eggOnGameboard.classList.remove('egg');
-                clearInterval(egg.eggMoveInterval);
-                eggsArray.splice(eggIndex, 1); //usuń jajo z tablicy
-                const timeOutInterval = setTimeout(() => {
-                    eggOnGameboard.remove();
-                    clearTimeout(timeOutInterval);
-                }, 1000);
-            }
-            //usuwanie z tablicy oraz planszy jaj które explodowały 
-            if (eggOnGameboard.classList.contains('explosion--big')) {
-                clearInterval(egg.eggMoveInterval);
-                eggsArray.splice(eggIndex, 1); //usuń jajo z tablicy
-                const timeOutInterval = setTimeout(() => {
-                    eggOnGameboard.remove();
-                    clearTimeout(timeOutInterval);
-                }, 1000);
-            }
-        })
     }
 }
