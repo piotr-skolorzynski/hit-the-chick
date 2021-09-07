@@ -16,7 +16,7 @@ export class Enemy {
         this.setEnemyPosition();
         this.animateEnemyAfterHit();
         this.interval = setInterval(() => this.animateEnemyAfterHit(), 1);
-        this.animateEnemyMoveInterval = setInterval(() => this.animateEnemyMove(), 20000); //animacja wrogów
+        this.animateEnemyMoveInterval = setInterval(() => this.animateEnemyMove(), 10000); //animacja wrogów
     }
 
     setEnemyPosition = () => {
